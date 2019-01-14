@@ -1,7 +1,7 @@
 import functools
-import hashlib
-import json
 from collections import OrderedDict
+
+import hash_util
 
 MINING_REWARD = 10
 genesis_block = {"previous_hash": "",
@@ -12,20 +12,17 @@ owner = "Andrew"
 participants = {owner}
 
 
-def hash_block(block):
-    return hashlib.sha256(json.dumps(block, sort_keys=True).encode()).hexdigest()
-
 
 def valid_proof(transactions, last_hash, proof_number):
     guess = (str(transactions) + str(last_hash) + str(proof_number)).encode()
-    guess_hash = hashlib.sha256(guess).hexdigest()
+    guess_hash = hash_util.hash_string_256(guess)
     print(guess_hash)
     return guess_hash[0:2] == "00"
 
 
 def proof_of_work():
     last_block = blockchain[-1]
-    last_hash = hash_block(last_block)
+    last_hash = hash_util.hash_block(last_block)
     proof = 0
     while not valid_proof(open_transactions, last_hash, proof):
         proof += 1
@@ -85,7 +82,7 @@ def verify_transaction(transaction):
 
 def mine_block():
     last_block = blockchain[-1]
-    hashed_block = hash_block(last_block)
+    hashed_block = hash_util.hash_block(last_block)
     proof = proof_of_work()
     reward_transaction = OrderedDict([
         ('sender', 'MINING'),
@@ -126,7 +123,7 @@ def verify_chain():
     for (index, block) in enumerate(blockchain):
         if index == 0:
             continue
-        if block["previous_hash"] != hash_block(blockchain[index - 1]):
+        if block["previous_hash"] != hash_util.hash_block(blockchain[index - 1]):
             return False
         # Omit the reward transaction which is the last one since we calculate the proof of work before
         # adding the reward transaction.
