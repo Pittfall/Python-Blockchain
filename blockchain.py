@@ -1,8 +1,9 @@
 import functools
 import json
 
-import hash_util
-from verification import Verification
+from utility import hash_util
+from utility.verification import Verification
+
 from block import Block
 from transaction import Transaction
 

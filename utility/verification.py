@@ -1,4 +1,4 @@
-import hash_util
+import utility.hash_util as hash_util
 
 class Verification:
     @staticmethod
