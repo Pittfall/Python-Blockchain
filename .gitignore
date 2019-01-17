@@ -2,5 +2,6 @@
 __pycache__
 __*
 blockchain.txt
+wallet.txt
 .DS_Store
 env
