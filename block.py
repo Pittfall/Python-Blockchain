@@ -9,3 +9,8 @@ class Block(Printable):
         self.transactions = transactions
         self.timestamp = time
         self.proof = proof
+
+    def to_dict(self):
+        block_copy = self.__dict__.copy()
+        block_copy['transactions'] = [tx.__dict__ for tx in block_copy['transactions']]
+        return block_copy

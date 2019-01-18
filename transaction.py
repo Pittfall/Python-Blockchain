@@ -12,3 +12,6 @@ class Transaction(Printable):
     def to_ordered_dict(self):
         return OrderedDict([('sender', self.sender), ('recipient', self.recipient),
                             ('amount', self.amount)])
+
+    def to_dict(self):
+        return {'sender': self.sender, 'recipient': self.recipient, 'amount': self.amount}
