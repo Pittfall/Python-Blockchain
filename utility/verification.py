@@ -1,12 +1,13 @@
 import utility.hash_util as hash_util
 from wallet import Wallet
 
+
 class Verification:
     @staticmethod
     def valid_proof(transactions, last_hash, proof_number):
         guess = (str([tx.to_ordered_dict() for tx in transactions])
-                + str(last_hash)
-                + str(proof_number)).encode()
+                 + str(last_hash)
+                 + str(proof_number)).encode()
         guess_hash = hash_util.hash_string_256(guess)
         print(guess_hash)
         return guess_hash[0:2] == "00"
